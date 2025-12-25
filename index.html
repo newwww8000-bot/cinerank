@@ -1,0 +1,1501 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="CineRank - Discover, explore and rank your favorite movies, TV shows and anime. Get ratings, reviews, cast information and streaming options all in one place.">
+  <meta name="keywords" content="movies, TV shows, anime, rankings, reviews, streaming, watch online, movie database">
+  <meta name="author" content="CineRank">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+  <link rel="canonical" href="https://cinerank.com/">
+  <meta property="og:title" content="CineRank - Discover Top Movies & TV Shows">
+  <meta property="og:description" content="Explore thousands of movies and TV shows with ratings, reviews, and streaming information.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://cinerank.com/">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="CineRank - Movie & TV Show Rankings">
+  <meta name="twitter:description" content="Discover your next favorite movie or show on CineRank.">
+  <title>CineRank - Discover Top Movies & TV Shows</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: radial-gradient(circle at top, #202020 0, #050505 45%, #000 100%);
+      color: #f5f5f5;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      min-height: 100vh;
+      padding-bottom: 80px;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: linear-gradient(to bottom, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.6));
+      padding: 14px 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .header-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand-mark {
+      width: 26px;
+      height: 26px;
+      border-radius: 6px;
+      background: linear-gradient(135deg, #e50914, #b20710);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+    }
+
+    h1 {
+      font-size: clamp(1.2rem, 3.5vw, 1.6rem);
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .tagline {
+      font-size: 0.8rem;
+      opacity: 0.7;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    section {
+      padding: 22px 0;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    /* Sidebar for legal/info links */
+    .side-nav {
+      position: fixed;
+      top: 70px;
+      left: 0;
+      width: 190px;
+      padding: 16px 14px;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.95), rgba(0,0,0,0.85));
+      border-right: 1px solid rgba(255,255,255,0.06);
+      color: #888;
+      font-size: 0.78rem;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      z-index: 90;
+      transform: translateX(-210px);
+      opacity: 0;
+      pointer-events: none;
+      transition: transform 0.25s ease, opacity 0.25s ease;
+    }
+
+    .side-nav.open {
+      transform: translateX(0);
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .side-nav-title {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: #aaa;
+      margin-bottom: 4px;
+    }
+
+    .side-nav a {
+      color: #aaa;
+      text-decoration: none;
+      padding: 4px 0;
+      display: block;
+    }
+
+    .side-nav a:hover {
+      color: #fff;
+      text-decoration: underline;
+    }
+
+    @media (min-width: 960px) {
+      .side-nav {
+        top: 80px;
+      }
+    }
+
+    h2 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 12px;
+      padding: 0 16px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: #e5e5e5;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 16px;
+      padding: 0 16px;
+    }
+
+    @media (min-width: 480px) {
+      .grid {
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+        gap: 20px;
+      }
+    }
+
+    @media (min-width: 768px) {
+      .grid {
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      }
+    }
+
+    .carousel {
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      gap: 12px;
+      padding: 0 16px;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      scroll-behavior: smooth;
+    }
+
+    .carousel::-webkit-scrollbar {
+      display: none;
+    }
+
+    .carousel .card {
+      flex: 0 0 140px;
+      scroll-snap-align: start;
+      height: 220px;
+    }
+
+    @media (min-width: 480px) {
+      .carousel .card {
+        flex: 0 0 160px;
+        height: 250px;
+      }
+    }
+
+    @media (min-width: 768px) {
+      .carousel .card {
+        flex: 0 0 185px;
+        height: 285px;
+      }
+    }
+
+    .card {
+      background: #181818;
+      border-radius: 6px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      position: relative;
+    }
+
+    .card:hover {
+      transform: translateY(-6px) scale(1.03);
+      box-shadow: 0 18px 30px rgba(0, 0, 0, 0.7);
+    }
+
+    .card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      border-radius: 6px;
+    }
+
+    .rank-badge {
+      position: absolute;
+      top: 6px;
+      left: 6px;
+      background: rgba(0, 0, 0, 0.8);
+      color: #f5f5f5;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-weight: 600;
+      font-size: 0.7rem;
+    }
+
+    .info {
+      position: static;
+      padding: 6px 2px 0;
+      background: transparent;
+    }
+
+    .info h4 {
+      font-size: 0.8rem;
+      margin-bottom: 2px;
+      font-weight: 600;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .rating {
+      color: #ffd700;
+      font-weight: 500;
+      font-size: 0.7rem;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .loader {
+      text-align: center;
+      padding: 40px;
+      font-size: 1.2rem;
+    }
+
+    /* Bottom Navigation */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.98), rgba(0, 0, 0, 0.9));
+      display: flex;
+      justify-content: space-around;
+      padding: 8px 4px 10px;
+      box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.8);
+      z-index: 100;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      padding: 6px 8px;
+      cursor: pointer;
+      transition: color 0.25s ease;
+      flex: 1;
+      max-width: 90px;
+      color: #777;
+    }
+
+    .nav-item:hover {
+      color: #f5f5f5;
+    }
+
+    .nav-item.active {
+      color: #ffffff;
+    }
+
+    .nav-item.active .nav-icon svg {
+      stroke: #e50914;
+    }
+
+    .nav-icon {
+      font-size: 1.4rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .nav-icon svg {
+      width: 1.4rem;
+      height: 1.4rem;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2;
+    }
+
+    .nav-label {
+      font-size: 0.7rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+    }
+
+    .search-container {
+      padding: 20px 16px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .search-container.tv-extra-hidden {
+      display: none;
+    }
+
+    .search-box {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .search-box input {
+      flex: 1;
+      padding: 12px 20px;
+      border-radius: 25px;
+      border: none;
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+      font-size: 1rem;
+    }
+
+    .search-box input::placeholder {
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    .search-box button {
+      padding: 12px 30px;
+      border-radius: 25px;
+      border: none;
+      background: #ffd700;
+      color: #000;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .search-box button:hover {
+      background: #ffed4e;
+      transform: scale(1.05);
+    }
+
+    .filters {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .filters select {
+      padding: 10px 15px;
+      border-radius: 25px;
+      border: none;
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .filters select:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+
+    .filters select option {
+      background: #0a0e27;
+      color: white;
+    }
+
+    /* Secure DNS section */
+    .secure-dns-section {
+      padding: 22px 16px 32px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .secure-dns-card {
+      background: radial-gradient(circle at top left, #262626 0, #141414 40%, #050505 100%);
+      border-radius: 14px;
+      padding: 20px 18px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.7);
+    }
+
+    .secure-dns-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      margin-bottom: 8px;
+    }
+
+    .secure-dns-badge {
+      font-size: 0.75rem;
+      padding: 3px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(0, 255, 128, 0.6);
+      color: #8fffd2;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    .secure-dns-description {
+      font-size: 0.9rem;
+      color: #d4d4d4;
+      margin-bottom: 14px;
+      max-width: 520px;
+    }
+
+    .secure-dns-steps {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding: 0;
+      margin: 0;
+    }
+
+    .secure-dns-step {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 10px 8px;
+      border-radius: 10px;
+      background: rgba(0, 0, 0, 0.3);
+    }
+
+    .secure-dns-step-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 999px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255, 255, 255, 0.06);
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+
+    .secure-dns-step-text strong {
+      font-size: 0.9rem;
+    }
+
+    .secure-dns-step-text p {
+      font-size: 0.8rem;
+      color: #b3b3b3;
+      margin-top: 2px;
+    }
+
+    .page-hidden {
+      display: none;
+    }
+
+    .back-to-top {
+      position: fixed;
+      bottom: 96px;
+      right: 20px;
+      background: rgba(0, 0, 0, 0.9);
+      color: white;
+      width: 40px;
+      height: 40px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      cursor: pointer;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.7);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      z-index: 99;
+    }
+
+    .back-to-top:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+    }
+
+    .back-to-top.show {
+      display: flex;
+    }
+
+    .menu-btn {
+      width: 32px;
+      height: 24px;
+      border: none;
+      background: transparent;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 0;
+      cursor: pointer;
+    }
+
+    .menu-btn span {
+      display: block;
+      height: 2px;
+      border-radius: 999px;
+      background: #f5f5f5;
+    }
+
+    @media (max-width: 480px) {
+      section {
+        padding: 20px 10px;
+      }
+      
+      .nav-label {
+        font-size: 0.7rem;
+      }
+      
+      .nav-icon {
+        font-size: 1.3rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<aside class="side-nav">
+  <div class="side-nav-title">Info</div>
+   ◦ <a href="privacy-policy.html">Privacy Policy</a>
+   ◦ <a href="about-us.html">About Us</a>
+   ◦ <a href="contact-us.html">Contact Us (contactcitric666@gmail.com)</a>
+   ◦ <a href="disclaimer.html">Disclaimer</a>
+   ◦ <a href="terms-conditions.html">Terms &amp; Conditions</a>
+</aside>
+
+<header>
+  <div class="header-inner">
+    <div class="brand">
+      <div class="brand-mark">C</div>
+      <div>
+        <h1>CineRank</h1>
+        <p class="tagline">Streaming style discovery for movies & TV</p>
+      </div>
+    </div>
+    <button class="menu-btn" type="button" onclick="toggleSideNav()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
+ </header>
+
+<!-- Back to Top Button -->
+<button class="back-to-top" onclick="scrollToTop()">↑</button>
+
+<!-- Home Page -->
+<div id="homePage">
+   <section class="secure-dns-section">
+     <div class="secure-dns-card">
+       <div class="secure-dns-title">
+         <span>🛡️ Enable Secure DNS</span>
+         <span class="secure-dns-badge">Recommended</span>
+       </div>
+       <p class="secure-dns-description">
+         If this site ever has trouble loading or seems blocked on your network, try enabling Secure DNS
+         in your browser using these steps. This can fix DNS issues and make lookups more reliable.
+       </p>
+       <ol class="secure-dns-steps">
+         <li class="secure-dns-step">
+           <div class="secure-dns-step-icon">⚙️</div>
+           <div class="secure-dns-step-text">
+             <strong>Go to Privacy &amp; Security settings.</strong>
+             <p>Open your browser settings and navigate to the <em>Privacy &amp; Security</em> section.</p>
+           </div>
+         </li>
+         <li class="secure-dns-step">
+           <div class="secure-dns-step-icon">🔒</div>
+           <div class="secure-dns-step-text">
+             <strong>Click on Secure DNS.</strong>
+             <p>Find the option labeled <em>Use secure DNS</em> or similar and enable it.</p>
+           </div>
+         </li>
+         <li class="secure-dns-step">
+           <div class="secure-dns-step-icon">☁️</div>
+           <div class="secure-dns-step-text">
+             <strong>Choose Cloudflare as the DNS provider.</strong>
+             <p>Select <em>Cloudflare (1.1.1.1)</em> from the list of providers to apply the setting.</p>
+           </div>
+         </li>
+       </ol>
+     </div>
+   </section>
+   <section>
+     <h2>🔥 Trending Today</h2>
+     <div id="today" class="carousel"></div>
+   </section>
+
+   <section>
+     <h2>📆 Top This Month</h2>
+     <div id="month" class="carousel"></div>
+   </section>
+
+   <section>
+     <h2>📅 Best of This Year</h2>
+     <div id="year" class="carousel"></div>
+   </section>
+
+   <section>
+     <h2>🏆 All-Time Classics</h2>
+     <div id="alltime" class="carousel"></div>
+    </section>
+ </div>
+
+<!-- Explore Page -->
+<div id="explorePage" class="page-hidden">
+   <div class="search-container">
+     <div class="search-box">
+      <input type="text" id="searchInput" placeholder="Search movies and TV shows...">
+       <button onclick="searchAll()">Search</button>
+     </div>
+
+     <div class="filters">
+       <select id="genreFilter" onchange="applyFilters()">
+         <option value="">All Genres</option>
+       </select>
+       <select id="yearFilter" onchange="applyFilters()">
+         <option value="">All Years</option>
+         <option value="2024">2024</option>
+         <option value="2023">2023</option>
+         <option value="2022">2022</option>
+         <option value="2021">2021</option>
+         <option value="2020">2020</option>
+         <option value="2019">2019</option>
+         <option value="2018">2018</option>
+         <option value="2017">2017</option>
+         <option value="2016">2016</option>
+         <option value="2015">2015</option>
+         <option value="2014">2014</option>
+         <option value="2013">2013</option>
+         <option value="2012">2012</option>
+         <option value="2011">2011</option>
+         <option value="2010">2010</option>
+         <option value="2009">2009</option>
+         <option value="2008">2008</option>
+         <option value="2007">2007</option>
+         <option value="2006">2006</option>
+         <option value="2005">2005</option>
+         <option value="2004">2004</option>
+         <option value="2003">2003</option>
+         <option value="2002">2002</option>
+         <option value="2001">2001</option>
+         <option value="2000">2000</option>
+       </select>
+       <select id="sortFilter" onchange="applyFilters()">
+         <option value="popularity.desc">Popularity</option>
+         <option value="vote_average.desc">Rating</option>
+         <option value="release_date.desc">Newest</option>
+         <option value="title.asc">Title A-Z</option>
+       </select>
+     </div>
+
+     <div id="exploreResults" class="grid"></div>
+   </div>
+</div>
+
+<!-- TV Shows Page -->
+<div id="tvshowsPage" class="page-hidden">
+   <section>
+     <h2>📺 Trending TV Shows</h2>
+     <div id="tvTrending" class="carousel"></div>
+   </section>
+
+   <section>
+     <h2>⭐ Top Rated TV Shows</h2>
+     <div id="tvTopRated" class="carousel"></div>
+   </section>
+
+   <section>
+     <h2>🎬 Latest TV Episodes</h2>
+     <div id="tvLatest" class="carousel"></div>
+   </section>
+
+   <section>
+     <h2>🏅 Best TV Series</h2>
+     <div id="tvBest" class="carousel"></div>
+   </section>
+
+   <hr style="margin: 40px 0; opacity: 0.3; border: none; border-top: 1px solid rgba(255,255,255,0.3);">
+
+   <div class="search-container tv-extra-hidden">
+     <div class="filters">
+       <select id="genreFilterTV" onchange="applyFiltersTV()">
+         <option value="">All Genres</option>
+       </select>
+       <select id="sortFilterTV" onchange="applyFiltersTV()">
+         <option value="popularity.desc">Popularity</option>
+         <option value="vote_average.desc">Rating</option>
+         <option value="first_air_date.desc">Newest</option>
+         <option value="name.asc">Title A-Z</option>
+       </select>
+     </div>
+
+     <div id="tvshowsResults" class="grid"></div>
+   </div>
+</div>
+
+<!-- Latest Page -->
+<div id="latestPage" class="page-hidden">
+   <section>
+     <h2>📆 Latest Movies</h2>
+     <div id="latestMovies" class="carousel"></div>
+   </section>
+
+   <section>
+     <h2>🎬 Latest TV Episodes</h2>
+     <div id="latestTV" class="carousel"></div>
+   </section>
+</div>
+
+<!-- Anime Page -->
+<div id="animePage" class="page-hidden">
+   <section>
+     <h2>🔥 Trending Anime Today</h2>
+     <div id="animeTV" class="carousel"></div>
+   </section>
+
+   <section>
+     <h2>🎥 Trending Anime Movies Today</h2>
+     <div id="animeMovies" class="carousel"></div>
+   </section>
+
+   <section>
+     <h2>⭐ Popular Anime Series</h2>
+     <div id="animeTVPopular" class="carousel"></div>
+   </section>
+
+   <section>
+     <h2>🍿 Popular Anime Movies</h2>
+     <div id="animeMoviesPopular" class="carousel"></div>
+   </section>
+</div>
+
+<!-- Bottom Navigation -->
+<nav class="bottom-nav">
+   <div class="nav-item active" onclick="switchPage('home')">
+     <div class="nav-icon">
+       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+         <rect x="3" y="4" width="18" height="16" rx="2"/>
+         <path d="M8 4v4M14 4v4M5 10h14"/>
+         <circle cx="8" cy="15" r="1"/>
+         <circle cx="12" cy="15" r="1"/>
+         <circle cx="16" cy="15" r="1"/>
+       </svg>
+     </div>
+     <div class="nav-label">Movies</div>
+   </div>
+   <div class="nav-item" onclick="switchPage('tvshows')">
+     <div class="nav-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="2" width="20" height="20" rx="2"/><polyline points="2 6 22 6"/><polyline points="2 12 22 12"/></svg></div>
+     <div class="nav-label">TV Shows</div>
+   </div>
+   <div class="nav-item" onclick="switchPage('explore')">
+     <div class="nav-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg></div>
+     <div class="nav-label">Explore</div>
+   </div>
+   <div class="nav-item" onclick="switchPage('latest')">
+     <div class="nav-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 16 14"/></svg></div>
+     <div class="nav-label">Latest</div>
+   </div>
+   <div class="nav-item" onclick="switchPage('anime')">
+     <div class="nav-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9"/><path d="M8 10c0-2 1.5-3 4-3s4 1 4 3"/><path d="M9 14s1 2 3 2 3-2 3-2"/></svg></div>
+     <div class="nav-label">Anime</div>
+   </div>
+</nav>
+
+<script>
+const API_KEY = "2c6c0c3b3185da46b0f55233341d4b98";
+const BASE = "https://api.themoviedb.org/3";
+const IMG = "https://image.tmdb.org/t/p/w500";
+
+// Infinite scroll state
+let exploreCurrentPage = 1;
+let exploreIsLoading = false;
+let exploreHasMore = true;
+let exploreCurrentQuery = null;
+let exploreCurrentGenre = null;
+let exploreCurrentYear = null;
+let exploreCurrentSort = 'popularity.desc';
+
+// Combined search pagination state (movies + tv)
+let exploreCurrentPageMovie = 1;
+let exploreCurrentPageTV = 1;
+let exploreMovieHasMore = true;
+let exploreTVHasMore = true;
+
+// TV Shows infinite scroll state
+let tvCurrentPage = 1;
+let tvIsLoading = false;
+let tvHasMore = true;
+let tvCurrentQuery = null;
+let tvCurrentGenre = null;
+let tvCurrentSort = 'popularity.desc';
+
+// Anime page load flag
+let animeLoaded = false;
+
+const today = new Date();
+const monthStart = new Date(today.getFullYear(), today.getMonth(), 1);
+const yearStart = new Date(today.getFullYear(), 0, 1);
+
+function format(d) {
+  return d.toISOString().split("T")[0];
+}
+
+function loadMovies(url, elementId, cacheKey, isTV = false) {
+  const el = document.getElementById(elementId);
+  
+  el.innerHTML = '<div class="loader">Loading...</div>';
+  
+  fetch(url)
+    .then(r => r.json())
+    .then(data => {
+      displayMovies(data.results, el, true, isTV);
+    })
+    .catch(err => {
+      el.innerHTML = '<div class="loader">Error loading movies</div>';
+    });
+}
+
+function openMovieOrShowDetails(id, isTV) {
+  if (isTV) {
+    openTVShowDetails(id);
+  } else {
+    openMovieDetails(id);
+  }
+}
+
+function displayMovies(movies, el, showRank = true, isTV = false) {
+  el.innerHTML = "";
+  movies.forEach((m, i) => {
+    const title = m.title || m.name;
+    const imgSrc = m.poster_path ? IMG + m.poster_path : 'https://via.placeholder.com/200x300/667eea/ffffff?text=No+Image';
+    const rating = m.vote_average ? m.vote_average.toFixed(1) : 'N/A';
+    const rankBadge = showRank ? '<div class="rank-badge">' + (i + 1) + '</div>' : '';
+    const itemIsTV = (m.media_type === 'tv') || m.isTV || isTV;
+
+    el.innerHTML += '<div class="card" onclick="openMovieOrShowDetails(' + m.id + ', ' + itemIsTV + ')">' +
+      rankBadge +
+      '<img src="' + imgSrc + '" alt="' + title + '">' +
+      '</div>';
+  });
+}
+
+function appendMovies(movies, el, isTV = false) {
+  movies.forEach((m) => {
+    const title = m.title || m.name;
+    const imgSrc = m.poster_path ? IMG + m.poster_path : 'https://via.placeholder.com/200x300/667eea/ffffff?text=No+Image';
+    const rating = m.vote_average ? m.vote_average.toFixed(1) : 'N/A';
+    const itemIsTV = (m.media_type === 'tv') || m.isTV || isTV;
+
+    el.innerHTML += '<div class="card" onclick="openMovieOrShowDetails(' + m.id + ', ' + itemIsTV + ')">' +
+      '<img src="' + imgSrc + '" alt="' + title + '">' +
+      '</div>';
+  });
+}
+
+function loadGenres() {
+  fetch(`${BASE}/genre/movie/list?api_key=${API_KEY}&language=en-US`)
+    .then(r => r.json())
+    .then(data => {
+      const genreSelect = document.getElementById('genreFilter');
+      data.genres.forEach(genre => {
+        genreSelect.innerHTML += `<option value="${genre.id}">${genre.name}</option>`;
+      });
+    });
+}
+
+function loadTrending() {
+  const resultsEl = document.getElementById('exploreResults');
+  exploreCurrentPage = 1;
+  exploreHasMore = true;
+  exploreCurrentQuery = null;
+  exploreCurrentGenre = null;
+  exploreCurrentYear = null;
+  exploreCurrentSort = 'popularity.desc';
+
+  resultsEl.innerHTML = '<div class="loader">Loading...</div>';
+
+  fetch(`${BASE}/movie/upcoming?api_key=${API_KEY}&language=en-US&region=US&page=1`)
+    .then(r => r.json())
+    .then(data => {
+      displayMovies(data.results, resultsEl, false);
+    })
+    .catch(err => {
+      resultsEl.innerHTML = '<div class="loader">Error loading movies</div>';
+    });
+}
+
+function applyFilters() {
+  const genre = document.getElementById('genreFilter').value;
+  const year = document.getElementById('yearFilter').value;
+  const sort = document.getElementById('sortFilter').value;
+  const resultsEl = document.getElementById('exploreResults');
+
+  // Reset pagination
+  exploreCurrentPage = 1;
+  exploreHasMore = true;
+  exploreCurrentQuery = null;
+  exploreCurrentGenre = genre;
+  exploreCurrentYear = year;
+  exploreCurrentSort = sort;
+
+  if (!genre && !year && sort === 'popularity.desc') {
+    loadTrending();
+    return;
+  }
+
+  resultsEl.innerHTML = '<div class="loader">Loading...</div>';
+
+  let url = `${BASE}/discover/movie?api_key=${API_KEY}&language=en-US&sort_by=${sort}&page=1`;
+  if (genre) url += `&with_genres=${genre}`;
+  if (year) url += `&primary_release_year=${year}`;
+
+  fetch(url)
+    .then(r => r.json())
+    .then(data => {
+      displayMovies(data.results, resultsEl, false);
+    })
+    .catch(err => {
+      resultsEl.innerHTML = '<div class="loader">Error loading movies</div>';
+    });
+}
+
+function openMovieDetails(movieId) {
+  localStorage.setItem('selectedMovieId', movieId);
+  window.location.href = 'movie-details.html';
+}
+
+// Page Navigation
+function switchPage(page) {
+  const navItems = document.querySelectorAll('.nav-item');
+  const homePage = document.getElementById('homePage');
+  const explorePage = document.getElementById('explorePage');
+  const tvshowsPage = document.getElementById('tvshowsPage');
+  const latestPage = document.getElementById('latestPage');
+  const animePage = document.getElementById('animePage');
+
+  navItems.forEach(item => item.classList.remove('active'));
+  
+  if (page === 'home') {
+    homePage.classList.remove('page-hidden');
+    explorePage.classList.add('page-hidden');
+    tvshowsPage.classList.add('page-hidden');
+    latestPage.classList.add('page-hidden');
+    animePage.classList.add('page-hidden');
+    navItems[0].classList.add('active');
+  } else if (page === 'tvshows') {
+    homePage.classList.add('page-hidden');
+    explorePage.classList.add('page-hidden');
+    tvshowsPage.classList.remove('page-hidden');
+    latestPage.classList.add('page-hidden');
+    animePage.classList.add('page-hidden');
+    navItems[1].classList.add('active');
+    loadGenresTV();
+    loadTrendingTV();
+  } else if (page === 'explore') {
+    homePage.classList.add('page-hidden');
+    explorePage.classList.remove('page-hidden');
+    tvshowsPage.classList.add('page-hidden');
+    latestPage.classList.add('page-hidden');
+    animePage.classList.add('page-hidden');
+    navItems[2].classList.add('active');
+    loadGenres();
+    loadTrending();
+  } else if (page === 'latest') {
+    homePage.classList.add('page-hidden');
+    explorePage.classList.add('page-hidden');
+    tvshowsPage.classList.add('page-hidden');
+    latestPage.classList.remove('page-hidden');
+    animePage.classList.add('page-hidden');
+    navItems[3].classList.add('active');
+  } else if (page === 'anime') {
+    homePage.classList.add('page-hidden');
+    explorePage.classList.add('page-hidden');
+    tvshowsPage.classList.add('page-hidden');
+    latestPage.classList.add('page-hidden');
+    animePage.classList.remove('page-hidden');
+    navItems[4].classList.add('active');
+    if (!animeLoaded) {
+      loadAnime();
+      animeLoaded = true;
+    }
+  }
+}
+
+
+function searchMovies() {
+  const query = document.getElementById('searchInput').value.trim();
+  const resultsEl = document.getElementById('exploreResults');
+
+  if (!query) {
+    loadTrending();
+    return;
+  }
+
+  // Reset pagination
+  exploreCurrentPage = 1;
+  exploreHasMore = true;
+  exploreCurrentQuery = query;
+  exploreCurrentGenre = null;
+  exploreCurrentYear = null;
+
+  resultsEl.innerHTML = '<div class="loader">Searching...</div>';
+
+  fetch(`${BASE}/search/movie?api_key=${API_KEY}&language=en-US&query=${encodeURIComponent(query)}&page=1`)
+    .then(r => r.json())
+    .then(data => {
+      if (data.results.length === 0) {
+        resultsEl.innerHTML = '<div class="loader">No movies found</div>';
+        return;
+      }
+      displayMovies(data.results, resultsEl, false);
+    })
+    .catch(err => {
+      resultsEl.innerHTML = '<div class="loader">Error searching movies</div>';
+    });
+}
+
+function searchTVShowsExplore() {
+  const query = document.getElementById('searchInput').value.trim();
+  const resultsEl = document.getElementById('exploreResults');
+
+  if (!query) {
+    loadTrending();
+    return;
+  }
+
+  // Reset pagination
+  exploreCurrentPage = 1;
+  exploreHasMore = true;
+  exploreCurrentQuery = query;
+  exploreCurrentGenre = null;
+  exploreCurrentYear = null;
+
+  resultsEl.innerHTML = '<div class="loader">Searching...</div>';
+
+  fetch(`${BASE}/search/tv?api_key=${API_KEY}&language=en-US&query=${encodeURIComponent(query)}&page=1`)
+    .then(r => r.json())
+    .then(data => {
+      if (data.results.length === 0) {
+        resultsEl.innerHTML = '<div class="loader">No TV shows found</div>';
+        return;
+      }
+      displayMovies(data.results, resultsEl, false, true);
+    })
+    .catch(err => {
+      resultsEl.innerHTML = '<div class="loader">Error searching TV shows</div>';
+    });
+}
+
+function searchAll() {
+  const query = document.getElementById('searchInput').value.trim();
+  const resultsEl = document.getElementById('exploreResults');
+
+  if (!query) {
+    loadTrending();
+    return;
+  }
+
+  // Reset combined search pagination
+  exploreCurrentPageMovie = 1;
+  exploreCurrentPageTV = 1;
+  exploreMovieHasMore = true;
+  exploreTVHasMore = true;
+  exploreHasMore = true;
+  exploreIsLoading = false;
+  exploreCurrentQuery = query;
+  exploreCurrentGenre = null;
+  exploreCurrentYear = null;
+
+  resultsEl.innerHTML = '<div class="loader">Searching...</div>';
+
+  Promise.all([
+    fetch(`${BASE}/search/movie?api_key=${API_KEY}&language=en-US&query=${encodeURIComponent(query)}&page=1`).then(r => r.json()),
+    fetch(`${BASE}/search/tv?api_key=${API_KEY}&language=en-US&query=${encodeURIComponent(query)}&page=1`).then(r => r.json())
+  ])
+  .then(([movieData, tvData]) => {
+    const movies = (movieData.results || []).map(m => Object.assign(m, { isTV: false }));
+    const tvs = (tvData.results || []).map(t => Object.assign(t, { isTV: true }));
+
+    if (movies.length === 0 && tvs.length === 0) {
+      resultsEl.innerHTML = '<div class="loader">No results found</div>';
+      exploreHasMore = false;
+      return;
+    }
+
+    // Combine and sort by popularity to mix results
+    const combined = movies.concat(tvs).sort((a, b) => (b.popularity || 0) - (a.popularity || 0));
+    displayMovies(combined, resultsEl, false);
+
+    // Update hasMore flags based on total_pages if available
+    exploreMovieHasMore = movieData.page < (movieData.total_pages || 1);
+    exploreTVHasMore = tvData.page < (tvData.total_pages || 1);
+    exploreHasMore = exploreMovieHasMore || exploreTVHasMore;
+  })
+  .catch(err => {
+    resultsEl.innerHTML = '<div class="loader">Error searching</div>';
+  });
+}
+
+function loadMoreMovies() {
+  if (exploreIsLoading || !exploreHasMore) return;
+
+  exploreIsLoading = true;
+
+  const resultsEl = document.getElementById('exploreResults');
+
+  if (exploreCurrentQuery) {
+    // Combined search pagination: fetch next pages for movies and tv (if available)
+    const promises = [];
+
+    if (exploreMovieHasMore) {
+      exploreCurrentPageMovie++;
+      promises.push(fetch(`${BASE}/search/movie?api_key=${API_KEY}&language=en-US&query=${encodeURIComponent(exploreCurrentQuery)}&page=${exploreCurrentPageMovie}`).then(r => r.json()).then(d => ({ type: 'movie', data: d })));
+    }
+
+    if (exploreTVHasMore) {
+      exploreCurrentPageTV++;
+      promises.push(fetch(`${BASE}/search/tv?api_key=${API_KEY}&language=en-US&query=${encodeURIComponent(exploreCurrentQuery)}&page=${exploreCurrentPageTV}`).then(r => r.json()).then(d => ({ type: 'tv', data: d })));
+    }
+
+    if (promises.length === 0) {
+      exploreHasMore = false;
+      exploreIsLoading = false;
+      return;
+    }
+
+    Promise.all(promises)
+      .then(results => {
+        let combined = [];
+        results.forEach(res => {
+          const data = res.data || {};
+          const items = (data.results || []).map(it => Object.assign(it, { isTV: res.type === 'tv' }));
+          if (items.length === 0) {
+            if (res.type === 'movie') exploreMovieHasMore = false;
+            if (res.type === 'tv') exploreTVHasMore = false;
+          } else {
+            combined = combined.concat(items);
+            if (res.type === 'movie') exploreMovieHasMore = data.page < (data.total_pages || 1);
+            if (res.type === 'tv') exploreTVHasMore = data.page < (data.total_pages || 1);
+          }
+        });
+
+        if (combined.length === 0) {
+          exploreHasMore = exploreMovieHasMore || exploreTVHasMore;
+        } else {
+          // Mix by popularity
+          combined.sort((a, b) => (b.popularity || 0) - (a.popularity || 0));
+          appendMovies(combined, resultsEl);
+        }
+
+        exploreHasMore = exploreMovieHasMore || exploreTVHasMore;
+        exploreIsLoading = false;
+      })
+      .catch(err => {
+        exploreIsLoading = false;
+      });
+
+    return;
+  }
+
+  // Non-search (default) behavior remains for movies discovery/upcoming
+  exploreCurrentPage++;
+  let url = `${BASE}/movie/upcoming?api_key=${API_KEY}&language=en-US&region=US&page=${exploreCurrentPage}`;
+  if (exploreCurrentGenre || exploreCurrentYear) {
+    url = `${BASE}/discover/movie?api_key=${API_KEY}&language=en-US&sort_by=${exploreCurrentSort}&page=${exploreCurrentPage}`;
+    if (exploreCurrentGenre) url += `&with_genres=${exploreCurrentGenre}`;
+    if (exploreCurrentYear) url += `&primary_release_year=${exploreCurrentYear}`;
+  }
+
+  fetch(url)
+    .then(r => r.json())
+    .then(data => {
+      if (data.results.length === 0) {
+        exploreHasMore = false;
+      } else {
+        appendMovies(data.results, resultsEl);
+      }
+      exploreIsLoading = false;
+    })
+    .catch(err => {
+      exploreIsLoading = false;
+    });
+}
+
+// Anime loader (Trending Today + Popular)
+function loadAnime() {
+  const animeTVEl = document.getElementById('animeTV');
+  const animeMoviesEl = document.getElementById('animeMovies');
+
+  animeTVEl.innerHTML = '<div class="loader">Loading anime series...</div>';
+  animeMoviesEl.innerHTML = '<div class="loader">Loading anime movies...</div>';
+
+  // Trending TV today (filter to anime by genre or language)
+  fetch(`${BASE}/trending/tv/day?api_key=${API_KEY}&language=en-US`)
+    .then(r => r.json())
+    .then(data => {
+      const results = (data.results || []).filter(item => {
+        const genres = item.genre_ids || [];
+        return genres.includes(16) || item.original_language === 'ja';
+      });
+      if (results.length === 0) {
+        animeTVEl.innerHTML = '<div class="loader">No trending anime series today</div>';
+        return;
+      }
+      displayMovies(results, animeTVEl, true, true);
+    })
+    .catch(() => {
+      animeTVEl.innerHTML = '<div class="loader">Error loading anime series</div>';
+    });
+
+  // Trending Movies today (filter to anime)
+  fetch(`${BASE}/trending/movie/day?api_key=${API_KEY}&language=en-US`)
+    .then(r => r.json())
+    .then(data => {
+      const results = (data.results || []).filter(item => {
+        const genres = item.genre_ids || [];
+        return genres.includes(16) || item.original_language === 'ja';
+      });
+      if (results.length === 0) {
+        animeMoviesEl.innerHTML = '<div class="loader">No trending anime movies today</div>';
+        return;
+      }
+      displayMovies(results, animeMoviesEl, true, false);
+    })
+    .catch(() => {
+      animeMoviesEl.innerHTML = '<div class="loader">Error loading anime movies</div>';
+    });
+
+  // Old rows: popular anime series & movies (discover)
+  loadMovies(`${BASE}/discover/tv?api_key=${API_KEY}&language=en-US&with_genres=16&with_original_language=ja&sort_by=popularity.desc`, "animeTVPopular", "anime_tv_popular", true);
+  loadMovies(`${BASE}/discover/movie?api_key=${API_KEY}&language=en-US&with_genres=16&with_original_language=ja&sort_by=popularity.desc`, "animeMoviesPopular", "anime_movies_popular");
+}
+
+// TV Shows Functions
+function loadGenresTV() {
+  fetch(`${BASE}/genre/tv/list?api_key=${API_KEY}&language=en-US`)
+    .then(r => r.json())
+    .then(data => {
+      const genreSelect = document.getElementById('genreFilterTV');
+      data.genres.forEach(genre => {
+        genreSelect.innerHTML += `<option value="${genre.id}">${genre.name}</option>`;
+      });
+    });
+}
+
+function loadTrendingTV() {
+  const resultsEl = document.getElementById('tvshowsResults');
+  tvCurrentPage = 1;
+  tvHasMore = true;
+  tvCurrentQuery = null;
+  tvCurrentGenre = null;
+  tvCurrentSort = 'popularity.desc';
+
+  resultsEl.innerHTML = '<div class="loader">Loading...</div>';
+
+  fetch(`${BASE}/tv/popular?api_key=${API_KEY}&language=en-US&page=1`)
+    .then(r => r.json())
+    .then(data => {
+      displayMovies(data.results, resultsEl, false, true);
+    })
+    .catch(err => {
+      resultsEl.innerHTML = '<div class="loader">Error loading TV shows</div>';
+    });
+}
+
+function applyFiltersTV() {
+  const genre = document.getElementById('genreFilterTV').value;
+  const sort = document.getElementById('sortFilterTV').value;
+  const resultsEl = document.getElementById('tvshowsResults');
+
+  // Reset pagination
+  tvCurrentPage = 1;
+  tvHasMore = true;
+  tvCurrentQuery = null;
+  tvCurrentGenre = genre;
+  tvCurrentSort = sort;
+
+  if (!genre && sort === 'popularity.desc') {
+    loadTrendingTV();
+    return;
+  }
+
+  resultsEl.innerHTML = '<div class="loader">Loading...</div>';
+
+  let url = `${BASE}/discover/tv?api_key=${API_KEY}&language=en-US&sort_by=${sort}&page=1`;
+  if (genre) url += `&with_genres=${genre}`;
+
+  fetch(url)
+    .then(r => r.json())
+    .then(data => {
+      displayMovies(data.results, resultsEl, false, true);
+    })
+    .catch(err => {
+      resultsEl.innerHTML = '<div class="loader">Error loading TV shows</div>';
+    });
+}
+
+function openTVShowDetails(showId) {
+  localStorage.setItem('selectedTVShowId', showId);
+  window.location.href = 'tv-details.html';
+}
+
+function searchTVShows() {
+  const query = document.getElementById('searchInputTV').value.trim();
+  const resultsEl = document.getElementById('tvshowsResults');
+
+  if (!query) {
+    loadTrendingTV();
+    return;
+  }
+
+  // Reset pagination
+  tvCurrentPage = 1;
+  tvHasMore = true;
+  tvCurrentQuery = query;
+  tvCurrentGenre = null;
+
+  resultsEl.innerHTML = '<div class="loader">Searching...</div>';
+
+  fetch(`${BASE}/search/tv?api_key=${API_KEY}&language=en-US&query=${encodeURIComponent(query)}&page=1`)
+    .then(r => r.json())
+    .then(data => {
+      if (data.results.length === 0) {
+        resultsEl.innerHTML = '<div class="loader">No TV shows found</div>';
+        return;
+      }
+      displayMovies(data.results, resultsEl, false, true);
+    })
+    .catch(err => {
+      resultsEl.innerHTML = '<div class="loader">Error searching TV shows</div>';
+    });
+}
+
+function loadMoreTVShows() {
+  if (tvIsLoading || !tvHasMore) return;
+  
+  tvIsLoading = true;
+  tvCurrentPage++;
+  
+  const resultsEl = document.getElementById('tvshowsResults');
+  let url;
+
+  if (tvCurrentQuery) {
+    url = `${BASE}/search/tv?api_key=${API_KEY}&language=en-US&query=${encodeURIComponent(tvCurrentQuery)}&page=${tvCurrentPage}`;
+  } else {
+    url = `${BASE}/tv/popular?api_key=${API_KEY}&language=en-US&page=${tvCurrentPage}`;
+    if (tvCurrentGenre) {
+      url = `${BASE}/discover/tv?api_key=${API_KEY}&language=en-US&sort_by=${tvCurrentSort}&page=${tvCurrentPage}`;
+      if (tvCurrentGenre) url += `&with_genres=${tvCurrentGenre}`;
+    }
+  }
+
+  fetch(url)
+    .then(r => r.json())
+    .then(data => {
+      if (data.results.length === 0) {
+        tvHasMore = false;
+      } else {
+        appendMovies(data.results, resultsEl, true);
+      }
+      tvIsLoading = false;
+    })
+    .catch(err => {
+      tvIsLoading = false;
+    });
+}
+
+// Allow Enter key to search
+document.addEventListener('DOMContentLoaded', () => {
+  const searchInput = document.getElementById('searchInput');
+  const searchInputTV = document.getElementById('searchInputTV');
+  
+  if (searchInput) {
+    searchInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        searchMovies();
+      }
+    });
+  }
+
+  if (searchInputTV) {
+    searchInputTV.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        searchTVShows();
+      }
+    });
+  }
+
+  // Infinite scroll listener
+  window.addEventListener('scroll', () => {
+    const backToTopBtn = document.querySelector('.back-to-top');
+    
+    // Show/hide back to top button
+    if (window.scrollY > 300) {
+      backToTopBtn.classList.add('show');
+    } else {
+      backToTopBtn.classList.remove('show');
+    }
+
+    // Infinite scroll
+    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 500) {
+      const explorePage = document.getElementById('explorePage');
+      const tvshowsPage = document.getElementById('tvshowsPage');
+      
+      if (!explorePage.classList.contains('page-hidden')) {
+        loadMoreMovies();
+      } else if (!tvshowsPage.classList.contains('page-hidden')) {
+        loadMoreTVShows();
+      }
+    }
+  });
+});
+
+// Load home page data
+loadMovies(`${BASE}/trending/movie/day?api_key=${API_KEY}&language=en-US`, "today", "movies_today");
+loadMovies(`${BASE}/discover/movie?api_key=${API_KEY}&language=en-US&primary_release_date.gte=${format(monthStart)}&primary_release_date.lte=${format(today)}&sort_by=vote_average.desc&vote_count.gte=100`, "month", "movies_month");
+loadMovies(`${BASE}/discover/movie?api_key=${API_KEY}&language=en-US&primary_release_date.gte=${format(yearStart)}&primary_release_date.lte=${format(today)}&sort_by=vote_average.desc&vote_count.gte=200`, "year", "movies_year");
+loadMovies(`${BASE}/movie/top_rated?api_key=${API_KEY}&language=en-US`, "alltime", "movies_alltime");
+
+// Load TV shows home page data
+loadMovies(`${BASE}/trending/tv/day?api_key=${API_KEY}&language=en-US`, "tvTrending", "tv_trending", true);
+loadMovies(`${BASE}/tv/top_rated?api_key=${API_KEY}&language=en-US`, "tvTopRated", "tv_toprated", true);
+loadMovies(`${BASE}/tv/on_the_air?api_key=${API_KEY}&language=en-US`, "tvLatest", "tv_latest", true);
+loadMovies(`${BASE}/discover/tv?api_key=${API_KEY}&language=en-US&sort_by=vote_average.desc&vote_count.gte=100`, "tvBest", "tv_best", true);
+
+// Load Latest page data (focus on very recent releases)
+// Movies: now playing in theatres (recent/current releases)
+loadMovies(`${BASE}/movie/now_playing?api_key=${API_KEY}&language=en-US&region=US`, "latestMovies", "latest_movies");
+// TV: shows airing today (latest episodes)
+loadMovies(`${BASE}/tv/airing_today?api_key=${API_KEY}&language=en-US`, "latestTV", "latest_tv", true);
+
+// Back to top function
+function scrollToTop() {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  });
+}
+
+function toggleSideNav() {
+  const sideNav = document.querySelector('.side-nav');
+  if (!sideNav) return;
+  sideNav.classList.toggle('open');
+}
+
+// register service worker
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js');
+}
+
+</script>
+</body>
+</html>
