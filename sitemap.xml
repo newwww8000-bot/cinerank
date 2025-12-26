@@ -1,46 +1,77 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-
+  <!-- Homepage -->
   <url>
-    <loc>https://topcinerank.netlify.app/</loc>
-    <lastmod>2025-12-24</lastmod>
+    <loc>https://topcinerank.netlify.app/index.html</loc>
+    <lastmod>2024-12-20</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
-
+  
+  <!-- Category pages -->
   <url>
-    <loc>https://topcinerank.netlify.app/about-us.html</loc>
-    <lastmod>2025-12-24</lastmod>
+    <loc>https://topcinerank.netlify.app/top-movies.html</loc>
+    <lastmod>2024-12-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  
+  <url>
+    <loc>https://topcinerank.netlify.app/upcoming-movies.html</loc>
+    <lastmod>2024-12-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  
+  <url>
+    <loc>https://topcinerank.netlify.app/best-of-year.html</loc>
+    <lastmod>2024-12-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  
+  <!-- Movie detail pages (add your actual movie pages) -->
+  <url>
+    <loc>https://topcinerank.netlify.app/movies/movie-1.html</loc>
+    <lastmod>2024-12-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>https://topcinerank.netlify.app/movies/movie-2.html</loc>
+    <lastmod>2024-12-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- About and contact pages -->
+  <url>
+    <loc>https://topcinerank.netlify.app/about.html</loc>
+    <lastmod>2024-12-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
-
+  
   <url>
-    <loc>https://topcinerank.netlify.app/contact-us.html</loc>
-    <lastmod>2025-12-24</lastmod>
+    <loc>https://topcinerank.netlify.app/contact.html</loc>
+    <lastmod>2024-12-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
-
+  
+  <!-- Privacy policy and terms (important for SEO) -->
   <url>
     <loc>https://topcinerank.netlify.app/privacy-policy.html</loc>
-    <lastmod>2025-12-24</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-
-  <url>
-    <loc>https://topcinerank.netlify.app/terms-conditions.html</loc>
-    <lastmod>2025-12-24</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-
-  <url>
-    <loc>https://topcinerank.netlify.app/disclaimer.html</loc>
-    <lastmod>2025-12-24</lastmod>
-    <changefreq>monthly</changefreq>
+    <lastmod>2024-12-20</lastmod>
+    <changefreq>yearly</changefreq>
     <priority>0.5</priority>
   </url>
-
+  
+  <url>
+    <loc>https://topcinerank.netlify.app/terms.html</loc>
+    <lastmod>2024-12-20</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
 </urlset>

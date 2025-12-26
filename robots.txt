@@ -1,8 +1,25 @@
-# Robots.txt for TopCineRank
-# Allow all search engines to crawl the site
-
 User-agent: *
 Allow: /
+Disallow: /search/
+Disallow: /private/
+Crawl-delay: 2
 
-# Sitemap location
+# Sitemap URL
 Sitemap: https://topcinerank.netlify.app/sitemap.xml
+
+# Specific instructions for major search engines
+User-agent: Googlebot
+Allow: /
+Disallow: /search/
+
+User-agent: Bingbot
+Allow: /
+Disallow: /search/
+
+User-agent: Yandex
+Allow: /
+Disallow: /search/
+
+# Tell search engines to index content normally
+Clean-param: ref /search/
+Clean-param: session_id /search/
