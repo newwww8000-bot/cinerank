@@ -1,23 +1,8 @@
-# CineRank robots.txt
-# Allow search engines to crawl all pages
+# Robots.txt for TopCineRank
+# Allow all search engines to crawl the site
+
 User-agent: *
 Allow: /
-Disallow: /admin/
-Disallow: /private/
-Disallow: /*.json$
-Disallow: /*.jsonp$
-
-# Specific rules for major search engines
-User-agent: Googlebot
-Allow: /
-Crawl-delay: 0
-
-User-agent: Bingbot
-Allow: /
-Crawl-delay: 1
 
 # Sitemap location
 Sitemap: https://topcinerank.netlify.app/sitemap.xml
-
-# Cache control
-Request-rate: 30/60
