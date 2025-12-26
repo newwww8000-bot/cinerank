@@ -252,6 +252,7 @@ function loadTVDetails(showId) {
       const title = show.name || show.original_name || 'Untitled';
       const firstAir = show.first_air_date ? show.first_air_date.substring(0,4) : 'N/A';
       const seasons = show.number_of_seasons ? show.number_of_seasons : 'N/A';
+      const episodes = show.number_of_episodes ? show.number_of_episodes : 'N/A';
       const runtime = (show.episode_run_time && show.episode_run_time.length) ? show.episode_run_time[0] + ' min' : 'N/A';
       const backdropUrl = show.backdrop_path ? IMG + show.backdrop_path : '';
       const backdropStyle = backdropUrl ? `background-image: linear-gradient(135deg, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.7) 100%), url('${backdropUrl}'); background-size: cover; background-position: center;` : '';
@@ -267,12 +268,35 @@ function loadTVDetails(showId) {
               <div class="meta-item">⭐ ${show.vote_average ? show.vote_average.toFixed(1) : 'N/A'}/10</div>
               <div class="meta-item">📅 ${firstAir}</div>
               <div class="meta-item">🎞️ ${seasons} seasons</div>
+              <div class="meta-item">📺 ${episodes} episodes</div>
               <div class="meta-item">⏱️ ${runtime}</div>
             </div>
             <p class="movie-overview">${show.overview || 'No overview available.'}</p>
           </div>
         </div>
       `;
+      // Update JSON-LD for the show with dynamic values
+      try {
+        const schema = {
+          "@context": "https://schema.org",
+          "@type": "TVSeries",
+          name: title,
+          description: show.overview || '',
+          image: show.poster_path ? IMG + show.poster_path : (show.backdrop_path ? IMG + show.backdrop_path : ''),
+          aggregateRating: show.vote_average ? {
+            "@type": "AggregateRating",
+            ratingValue: show.vote_average.toFixed(1),
+            bestRating: 10,
+            worstRating: 0,
+            ratingCount: show.vote_count || undefined
+          } : undefined,
+          url: window.location.href,
+          numberOfSeasons: show.number_of_seasons || undefined,
+          numberOfEpisodes: show.number_of_episodes || undefined
+        };
+        const el = document.getElementById('tvSchema');
+        if (el) el.textContent = JSON.stringify(schema);
+      } catch (e) { /* ignore */ }
       loadRelated(showId, show.genres);
     })
     .catch(err => {
@@ -330,7 +354,7 @@ function displayMoreRelated(type) {
     const title = item.title || item.name;
     
     return `
-      <div class="related-card" onclick="selectShow(${id})">
+      <div class="related-card" onclick="selectShow(${id}, ${type === 'tv'})">
         <img src="${IMG + poster}" alt="${title}">
       </div>
     `;
